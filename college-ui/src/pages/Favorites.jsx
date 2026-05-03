@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import BASE_URL from "../api"; // ✅ import base URL
 
+
 export default function Favorites() {
   const [data, setData] = useState([]);
 

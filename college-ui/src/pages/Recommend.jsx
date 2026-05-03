@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import BASE_URL from "../api"; // ✅ import base URL
+import BASE_URL from "../api";
 
 export default function Recommend() {
   const [rank, setRank] = useState("");
