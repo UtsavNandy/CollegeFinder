@@ -1,19 +1,30 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import BASE_URL from "../api"; // ✅ import base URL
 
 export default function Favorites() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchFav = async () => {
-      const email = localStorage.getItem("user");
+      try {
+        const email = localStorage.getItem("user");
 
-      const res = await axios.get(
-        `http://localhost:8080/favorite/get?email=${email}`
-      );
+        if (!email) {
+          alert("Please login first");
+          return;
+        }
 
-      setData(res.data);
+        const res = await axios.get(
+          `${BASE_URL}/favorite/get?email=${email}`
+        );
+
+        setData(res.data);
+      } catch (error) {
+        console.error(error);
+        alert("Failed to load favorites ❌");
+      }
     };
 
     fetchFav();
@@ -26,7 +37,11 @@ export default function Favorites() {
       <div className="grid md:grid-cols-3 gap-6 p-6">
         {data.map((c) => (
           <div key={c.id} className="bg-white rounded-xl shadow-lg">
-            <img src={c.imageUrl} className="w-full h-40 object-cover" />
+            <img
+              src={c.imageUrl}
+              alt={c.name}
+              className="w-full h-40 object-cover"
+            />
 
             <div className="p-4">
               <h3 className="font-bold">{c.name}</h3>
